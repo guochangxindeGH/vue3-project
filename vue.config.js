@@ -45,7 +45,7 @@ module.exports = {
       .set('@', resolve('src'))
       .set('@assets', resolve('src/assets'))
       .set('@views', resolve('src/views'))
-      .set('@apis', resolve('src/apis'))
+      .set('@api', resolve('src/api'))
       .set('@components', resolve('src/components'))
       .set('@store', resolve('src/store'))
       .set('@plugins', resolve('src/plugins'))
@@ -86,7 +86,7 @@ module.exports = {
   devServer: {
     /* 本地ip地址 */
     // host: "127.0.0.1",
-    host: '0.0.0.0',
+    host: 'localhost',
     port: '8080',
     hot: true,
     https: false, // https:{type:Boolean}配置前缀
@@ -94,7 +94,7 @@ module.exports = {
     /* 跨域代理 */
     proxy: {
       '/api': {
-        target: 'http://127.0.0.1:8888/', /* 目标代理服务器地址 */
+        target: 'http://127.0.0.1:8080/', /* 目标代理服务器地址 */
         changeOrigin: true, /* 允许跨域 */
         secure: false, // 如果是https接口，需要配置这个参数
         ws: true, // 如果要代理 websockets，配置这个参数

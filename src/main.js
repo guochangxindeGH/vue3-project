@@ -4,9 +4,11 @@ import router from './router'
 import store from './store'
 import Antd from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.css'
-import { Axios } from 'axios'
+import './mock/index'
+import axios from 'axios'
 
 const app = createApp(App)
-app.use(store).use(router).use(Antd).mount('#app')
+app.config.globalProperties.$axios = axios
 
-app.config.globalProperties.$axios = Axios
+app.use(store).use(router).use(Antd)
+app.mount('#app')

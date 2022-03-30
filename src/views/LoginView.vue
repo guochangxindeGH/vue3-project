@@ -20,21 +20,52 @@
 </template>
 
 <script>
-export default {
-  data () {
-    return {
+import { getLogin } from '@api/login'
+import { defineComponent, reactive, toRefs, getCurrentInstance } from 'vue'
+
+export default defineComponent({
+  name: 'login-view',
+
+  setup () {
+    const state = reactive({
       form: {
         username: 'admin',
         password: '123456'
       }
+    })
+
+    const { proxy } = getCurrentInstance()
+    console.log(proxy)
+    const onSubmit = async () => {
+      // const { username, password } = state.form
+      // console.log(username, password)
+      // proxy.$axios.get('/login').then((res) => {
+      //   if (res.status === 200) {
+      //     console.log(res.data.data)
+      //     this.$router.push({
+      //       name: 'home'
+      //     })
+      //   }
+      // })
+      debugger
+      const res = await getLogin(state.form)
+      if (res.status === 200) {
+        debugger
+        console.log(res.data.data)
+        this.$router.push({
+          name: 'home'
+        })
+      }
+      console.log('登陆成功！', res)
     }
-  },
-  methods: {
-    onSubmit () {
-      console.log('登陆成功！')
+
+    /* 返回 */
+    return {
+      ...toRefs(state),
+      onSubmit
     }
   }
-}
+})
 </script>
 <style lang="scss" scoped>
 

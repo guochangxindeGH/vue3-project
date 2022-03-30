@@ -1,21 +1,19 @@
 import http from '@utils/http'
 
-export const Login = (data, header) => http({
-  url: '/user/getLogin',
+export const Login = (data, headers) => http({
+  url: '/login',
   method: 'post',
   data: data,
   headers: {
-    Source: header.Source
+    Source: headers?.Source
   }
 })
 
-export function getLogin (data, headers) {
+export function getLogin (data) {
+  debugger
   return http({
-    url: '/user/getLogin',
+    url: '/login',
     method: 'post',
-    data: data,
-    headers: {
-      Source: headers.Source
-    }
+    data: data
   })
 }
