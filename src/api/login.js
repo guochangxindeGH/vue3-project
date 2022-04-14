@@ -10,7 +10,6 @@ export const Login = (data, headers) => http({
 })
 
 export function getLogin (data) {
-  debugger
   return http({
     url: '/login',
     method: 'post',

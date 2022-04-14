@@ -1,8 +1,6 @@
 
 export default {
   login: config => {
-    console.log(config)
-    debugger
     const { password, username } = JSON.parse(config.body)
     if (username === 'admin' && password === '123456') {
       return {

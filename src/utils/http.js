@@ -31,9 +31,9 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     if (response.status === 200) {
-      return Promise.resolve(response)
+      return Promise.resolve(response.data)
     } else {
-      return Promise.reject(response)
+      return Promise.reject(response.data)
     }
   },
   error => {

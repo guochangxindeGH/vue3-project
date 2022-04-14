@@ -1,17 +1,16 @@
 <template>
   <div class="login-container">
     <h2 class="login-title">Vue+AntDesign实现登陆页面</h2>
-    <a-form ref="form" :model="form" class="login-form">
+    <a-form :model="form" class="login-form">
       <h2 class="title">用户登录 LOGIN</h2>
       <a-form-item>
-        <a-input class="inputBox" v-model="form.username">
+        <a-input class="inputBox" v-model:value="form.username">
         </a-input>
       </a-form-item>
       <a-form-item>
-        <a-input-password class="inputBox" v-model="form.password">
+        <a-input-password class="inputBox" v-model:value="form.password">
         </a-input-password>
       </a-form-item>
-
       <a-form-item>
         <a-button class="submit" type="primary" @click="onSubmit">登录</a-button>
       </a-form-item>
@@ -47,11 +46,9 @@ export default defineComponent({
       //     })
       //   }
       // })
-      debugger
       const res = await getLogin(state.form)
-      if (res.status === 200) {
+      if (res.code === 200) {
         debugger
-        console.log(res.data.data)
         this.$router.push({
           name: 'home'
         })
