@@ -21,17 +21,24 @@
 <script>
 import { getLogin } from '@api/login'
 import { defineComponent, reactive, toRefs, getCurrentInstance } from 'vue'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   name: 'login-view',
 
+  beforeCreate () {
+    console.log('beforeCreate')
+  },
+
   setup () {
+    console.log('setup执行了')
     const state = reactive({
       form: {
         username: 'admin',
         password: '123456'
       }
     })
+    const router = useRouter()
 
     const { proxy } = getCurrentInstance()
     console.log(proxy)
@@ -48,8 +55,7 @@ export default defineComponent({
       // })
       const res = await getLogin(state.form)
       if (res.code === 200) {
-        debugger
-        this.$router.push({
+        router.push({
           name: 'home'
         })
       }
