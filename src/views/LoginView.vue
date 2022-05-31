@@ -20,7 +20,7 @@
 
 <script>
 import { getLogin } from '@api/login'
-import { defineComponent, reactive, toRefs, getCurrentInstance } from 'vue'
+import { onMounted, onUpdated, onUnmounted, defineComponent, reactive, toRefs, getCurrentInstance, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 export default defineComponent({
@@ -29,30 +29,40 @@ export default defineComponent({
   beforeCreate () {
     console.log('beforeCreate')
   },
+  created () {
+    console.log('created')
+  },
+  mounted () {
+    console.log('mounted')
+  },
+  unmounted () {
+    console.log('destroyed')
+  },
 
-  setup () {
+  setup (props, context) {
+    onMounted(() => {
+      console.log('onMounted!')
+    })
+    onUpdated(() => {
+      console.log('updated!')
+    })
+    onUnmounted(() => {
+      console.log('unmounted!')
+    })
     console.log('setup执行了')
+
     const state = reactive({
       form: {
         username: 'admin',
         password: '123456'
       }
     })
+    const msg = ref('hello,vue3')
     const router = useRouter()
 
     const { proxy } = getCurrentInstance()
     console.log(proxy)
     const onSubmit = async () => {
-      // const { username, password } = state.form
-      // console.log(username, password)
-      // proxy.$axios.get('/login').then((res) => {
-      //   if (res.status === 200) {
-      //     console.log(res.data.data)
-      //     this.$router.push({
-      //       name: 'home'
-      //     })
-      //   }
-      // })
       const res = await getLogin(state.form)
       if (res.code === 200) {
         router.push({
@@ -64,14 +74,15 @@ export default defineComponent({
 
     /* 返回 */
     return {
+      msg,
       ...toRefs(state),
       onSubmit
     }
   }
 })
 </script>
-<style lang="scss" scoped>
 
+<style lang="scss" scoped>
 /* 背景 */
 .login-container {
   position: absolute;

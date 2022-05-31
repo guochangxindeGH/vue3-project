@@ -25,6 +25,22 @@ const routes = [
     }
   },
   {
+    path: '/demo',
+    name: 'demo',
+    component: () => import('@/views/demo/demoView.vue'),
+    meta: {
+      isLogin: true
+    }
+  },
+  {
+    path: '/demo2',
+    name: 'demo2',
+    component: () => import('@/views/demo/demoView2.vue'),
+    meta: {
+      isLogin: true
+    }
+  },
+  {
     path: '/about',
     name: 'about',
     // route level code-splitting
