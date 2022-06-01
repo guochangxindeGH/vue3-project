@@ -19,14 +19,14 @@
 
 <script>
 import GrandSon from './grandSonView.vue'
-import { defineComponent, onUnmounted, ref, reactive, readonly, isRef, isReactive, isReadonly, isProxy } from 'vue'
+import { defineComponent, onUnmounted, ref, toRef, toRefs, reactive, readonly, isRef, isReactive, isReadonly, isProxy } from 'vue'
 import emitter from '@utils/mitt'
 export default defineComponent({
   name: 'childView',
   components: {
     GrandSon
   },
-  props: ['msg'],
+  props: ['msg', 'state', 'state22'],
   // props: {
   //   msg: {
   //     type: String,
@@ -61,8 +61,15 @@ export default defineComponent({
       emitter.off('change-msg', changeMsg)
     })
 
-    console.log('props:', props)// msg: "hello,vue3"
-    console.log('attrs:', attrs)// msg2: "哈哈哈"
+    // const state = toRef(props, 'state')
+    const { state } = toRefs(props)
+    const { state22 } = toRefs(props)
+    const state222 = props.state22
+    console.log('props:', props)
+    console.log('attrs:', attrs)
+    console.log('state:', state.value.form.username)
+    console.log('state22:', state22.value.form.value.username)
+    console.log('state222:', state222.form.value.username)
 
     const state1 = ref(1)
     console.log('isref:', isRef(state1))// isref: true

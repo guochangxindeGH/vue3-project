@@ -4,7 +4,7 @@
   <button @click="color='yellow'">黄</button>
   <button @click="color='blue'">蓝</button>
   <hr>
-  <child :msg="msg" msg2='哈哈哈' @show="show" />
+  <child :msg="msg" :state="state" :state22="state22" msg2='哈哈哈' @show="show" />
   <hr>
   <child2></child2>
   <hr>
@@ -22,7 +22,7 @@
   </Suspense>
 </template>
 <script>
-import { defineComponent, defineAsyncComponent, reactive, toRefs, ref, provide } from 'vue'
+import { defineComponent, defineAsyncComponent, reactive, toRefs, ref, provide, nextTick } from 'vue'
 // 引入子组件
 import Child from './childrenView.vue'
 import Child2 from './childrenView2.vue'
@@ -83,9 +83,10 @@ export default defineComponent({
         password: '123456'
       }
     })
-    const state2 = toRefs(state)
+    const state22 = toRefs(state)
     console.log('state', state.form)
-    console.log('state2', state2.form.value)
+    console.log('state22', state22.form.value)
+    state22.form.value.username = 'admin2'
 
     const show = () => {
       console.log('name:', 'gcx')
@@ -94,10 +95,16 @@ export default defineComponent({
     const color = ref('red')
     provide('color', color)
 
+    nextTick(() => {
+      console.log('nextTick')
+    })
+
     return {
       msg,
       show,
+      state,
       ...toRefs(state),
+      state22,
       color
     }
   }
