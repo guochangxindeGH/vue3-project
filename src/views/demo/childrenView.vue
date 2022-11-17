@@ -64,12 +64,13 @@ export default defineComponent({
     // const state = toRef(props, 'state')
     const { state } = toRefs(props)
     const { state22 } = toRefs(props)
-    const state222 = props.state22
+    // 直接使用时，赋值对象为非响应式
+    const state222 = ref(props.state22)
     console.log('props:', props)
     console.log('attrs:', attrs)
     console.log('state:', state.value.form.username)
     console.log('state22:', state22.value.form.value.username)
-    console.log('state222:', state222.form.value.username)
+    console.log('state222:', state222.value.form.username)
 
     const state1 = ref(1)
     console.log('isref:', isRef(state1))// isref: true

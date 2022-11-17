@@ -4,14 +4,15 @@
   <button @click="color='yellow'">黄</button>
   <button @click="color='blue'">蓝</button>
   <hr>
-  <child :msg="msg" :state="state" :state22="state22" msg2='哈哈哈' @show="show" />
+  <child :msg="msg" :state="state" ref="childView" :state22="state22" msg2='哈哈哈' @show="show" />
+  <p>{{ '11111111111111' + state22.form.value.username }}</p>
   <hr>
   <child2></child2>
   <hr>
   <modal-button></modal-button>
   <hr>
   <Suspense>
-     <!-- v-slot:defaul可以简写成#defaul -->
+    <!-- v-slot:defaul可以简写成#defaul -->
     <template v-slot:default>
       <AsyncComp/>
     </template>
@@ -22,7 +23,7 @@
   </Suspense>
 </template>
 <script>
-import { defineComponent, defineAsyncComponent, reactive, toRefs, ref, provide, nextTick } from 'vue'
+import { defineComponent, defineAsyncComponent, onMounted, reactive, toRefs, ref, provide, nextTick } from 'vue'
 // 引入子组件
 import Child from './childrenView.vue'
 import Child2 from './childrenView2.vue'
@@ -56,9 +57,10 @@ export default defineComponent({
     //   console.log('--onBeforeMount')
     // })
 
-    // onMounted(() => {
-    //   console.log('--onMounted')
-    // })
+    onMounted(() => {
+      console.log('--onMounted')
+      console.log(childView.value)
+    })
 
     // onBeforeUpdate(() => {
     //   console.log('--onBeforeUpdate')
@@ -77,12 +79,18 @@ export default defineComponent({
     // })
 
     const msg = ref('hello,vue3')
+    const childView = ref(null)
+    console.log(childView)
     const state = reactive({
       form: {
         username: 'admin',
         password: '123456'
+      },
+      form2: {
+        username: 'admin'
       }
     })
+    console.log(typeof state)
     const state22 = toRefs(state)
     console.log('state', state.form)
     console.log('state22', state22.form.value)
@@ -90,6 +98,7 @@ export default defineComponent({
 
     const show = () => {
       console.log('name:', 'gcx')
+      state22.form.value.username = 'admin22222'
     }
 
     const color = ref('red')
@@ -101,6 +110,7 @@ export default defineComponent({
 
     return {
       msg,
+      childView,
       show,
       state,
       ...toRefs(state),
